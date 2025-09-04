@@ -3,21 +3,80 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Cloud MP3 Player</title>
+    <title>My Azure Playlist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+            background: #111;
+            color: #eee;
+        }
+
+        h1 {
+            color: #1db954;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 1rem;
+        }
+
+        button {
+            background-color: #1db954;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 2rem;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>🎵 Stream My Song from Azure Blob Storage</h1>
-    <audio controls>
-        <source
-            src="https://spotifystorageforbright.blob.core.windows.net/music/This%20Rock%20Upbeat.mp3?sp=r&st=2025-09-04T18:29:47Z&se=2025-09-05T02:44:47Z&spr=https&sv=2024-11-04&sr=b&sig=ebihDJMJ6D9Zm%2F%2FXdmf5U1k4NNi%2BxwjvIvfH7T%2FUB70%3D"
-            type="audio/mpeg">
+    <h1>🎧 My Azure Music Player</h1>
+    <ul id="playlist">
+        <!-- Songs will be loaded here -->
+    </ul>
+
+    <audio id="audioPlayer" controls>
         Your browser does not support the audio element.
     </audio>
 
-    </audio>
+    <script>
+        // 🎵 Playlist data: title + full SAS URL for each MP3
+        const songs = [
+            {
+                title: "This Rock Upbeat",
+                url: "https://spotifystorageforbright.blob.core.windows.net/music/This%20Rock%20Upbeat.mp3?sp=r&st=2025-09-04T18:29:47Z&se=2025-09-05T02:44:47Z&spr=https&sv=2024-11-04&sr=b&sig=ebihDJMJ6D9Zm%2F%2FXdmf5U1k4NNi%2BxwjvIvfH7T%2FUB70%3D"
+            },
+            // 🆕 Add more songs here later
+        ];
 
+        const playlist = document.getElementById("playlist");
+        const audioPlayer = document.getElementById("audioPlayer");
+
+        // ⏯️ Create a list item for each song
+        songs.forEach(song => {
+            const li = document.createElement("li");
+            const button = document.createElement("button");
+            button.innerText = `▶️ ${song.title}`;
+            button.onclick = () => {
+                audioPlayer.src = song.url;
+                audioPlayer.play();
+            };
+            li.appendChild(button);
+            playlist.appendChild(li);
+        });
+    </script>
 </body>
 
 </html>
